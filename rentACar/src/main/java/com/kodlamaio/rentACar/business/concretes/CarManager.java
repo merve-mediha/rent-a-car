@@ -4,7 +4,6 @@ package com.kodlamaio.rentACar.business.concretes;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kodlamaio.rentACar.business.abstracts.CarService;
@@ -30,7 +29,7 @@ public class CarManager implements CarService {
 	
 	
 	
-	@Autowired
+	
 	public CarManager(CarRepository carRepository, ModelMapperService modelMapperService) {
 		this.carRepository = carRepository;
 		this.modelMapperService = modelMapperService;
@@ -40,20 +39,11 @@ public class CarManager implements CarService {
 	@Override
 	public Result add(CreateCarRequest createCarRequest) {
 		if(!checkBrandCount(createCarRequest.getBrandId())) {
-//		Car car = new Car();
-//		car.setDescription(createCarRequest.getDescription());
-//		car.setDailyPrice(createCarRequest.getDailyPrice());
+
 			Car car = this.modelMapperService.forRequest()
 					.map(createCarRequest, Car.class);
 			car.setState(1);
 			
-			
-//		Brand brand = new  Brand();
-//		brand.setId(createCarRequest.getBrandId());
-//		car.setBrand(brand);
-//		Color color = new Color();
-//		color.setId(createCarRequest.getColorId());
-//		car.setColor(color);
 		this.carRepository.save(car);
 		return new SuccessResult("CAR ADDED");
 		
@@ -74,20 +64,6 @@ public class CarManager implements CarService {
 	}
 	
 	
-
-
-
-
-//	@Override
-//	public Car getById(int id) {
-//		Car car = null;
-//		for (Car item : getAll()) {
-//			if (item.getId()==id) {
-//				car=item;
-//			} 
-//		}
-//		return car;
-//	}
 	
 	@Override
 	public DataResult<CarResponse> getById(int id){
@@ -105,7 +81,7 @@ public class CarManager implements CarService {
 		List<ListCarResponse> response = cars.stream()
 				.map(car -> this.modelMapperService.forResponse().map(car, ListCarResponse.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<ListCarResponse>>(response, "CARS.GETTED");
+		return new SuccessDataResult<List<ListCarResponse>>(response, "CARS GETTED");
 	}
 
 

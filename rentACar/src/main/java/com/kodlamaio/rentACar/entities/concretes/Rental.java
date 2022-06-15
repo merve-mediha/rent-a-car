@@ -1,6 +1,8 @@
 package com.kodlamaio.rentACar.entities.concretes;
 
-import java.time.LocalDate;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -26,10 +29,10 @@ public class Rental {
 	private int id;
 	
 	@Column(name="pickup_date")
-	private LocalDate pickupDate;
+	private Date pickupDate;
 	
 	@Column(name="return_date")
-	private LocalDate returnDate;
+	private Date returnDate;
 	
 	@Column(name="total_days")
 	private long totalDays;
@@ -52,6 +55,9 @@ public class Rental {
 	@ManyToOne
 	@JoinColumn(name="returnCity_id",referencedColumnName="id")
 	private City returnCityId;
+	
+	@OneToMany (mappedBy="rental")
+	private List<AdditionalService> additionals;
 	
 
 }

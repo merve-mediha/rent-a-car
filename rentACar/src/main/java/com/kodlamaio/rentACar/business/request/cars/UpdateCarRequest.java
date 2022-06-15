@@ -15,4 +15,6 @@ public class UpdateCarRequest {
 	private String carPlate;
 	private int brandId;
 	private int colorId;
+	private int minFindexScore;
+	
 }

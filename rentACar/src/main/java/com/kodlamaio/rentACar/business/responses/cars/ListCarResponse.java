@@ -15,5 +15,6 @@ public class ListCarResponse {
 	private  int state;
 	private int colorId;
 	private int brandId;
+	private int minFindexScore;
 	
 }

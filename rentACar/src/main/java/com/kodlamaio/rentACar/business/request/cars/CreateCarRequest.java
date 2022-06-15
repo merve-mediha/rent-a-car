@@ -16,6 +16,7 @@ public class CreateCarRequest {
 	private int state;
 	private int brandId;
 	private int colorId;
+	private int minFindexScore;
 	
 	
 	

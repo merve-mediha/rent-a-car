@@ -74,6 +74,9 @@ public class Car {
 
 	@Column(name="state")  //1 Available 2 Maintenance 3 Rent
 	private int state;
+	
+	@Column(name="minFindexScore")
+	private int minFindexScore;
 
 	
 	

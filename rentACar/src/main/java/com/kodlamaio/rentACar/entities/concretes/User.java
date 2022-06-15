@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,33 +19,35 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","rentals"})
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="first_name")
+
+	@Column(name = "first_name")
 	private String firstName;
-	
-	@Column(name="last_name")
+
+	@Column(name = "last_name")
 	private String lastName;
-	
-	@Column(name="tc_no")
-	private String tcNo;
-	
-	@Column(name="email")
+
+	@Column(name = "identity_number")
+	private String identityNumber;
+
+	@Column(name = "birthYear")
+	private int birthYear;
+
+	@Column(name = "email")
 	private String email;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
-	
-	@OneToMany(mappedBy="user")
-	List<Rental>rentals;
-	
-	
-	
+
+	@OneToMany(mappedBy = "user")
+	List<Rental> rentals;
+
 }

@@ -38,19 +38,10 @@ public class MaintenanceManager implements MaintenanceService {
 	@Override
 	public Result add(CreateMaintenanceRequest createMaintenanceRequest) {
 
-		/*
-		 * Maintenance maintenance = new Maintenance();
-		 * maintenance.setDateSent(createMaintenanceRequest.getDateSent());
-		 * maintenance.setDateReturned(createMaintenanceRequest.getDateReturned());
-		 * maintenance.setDescription(createMaintenanceRequest.getDescription()); Car
-		 * car = new Car(); car.setId(createMaintenanceRequest.getCarId());
-		 * maintenance.setCar(car);
-		 */
-
 		Maintenance maintenance = this.modelMapperService.forRequest().map(createMaintenanceRequest, Maintenance.class);
 		Car car = this.carRepository.findById(createMaintenanceRequest.getCarId());		
-		car.setState(1);		
-
+		car.setId(createMaintenanceRequest.getId());
+		car.setState(2);		
 		this.maintenanceRepository.save(maintenance);
 
 		return new SuccessResult("MAINTENANCE.SAVED");
@@ -62,24 +53,13 @@ public class MaintenanceManager implements MaintenanceService {
 		int carId = deleteMaintenanceRequest.getId();
 		this.maintenanceRepository.deleteById(carId);
 		return new SuccessResult("MAINTENANCE.DELETED");		
-		
 	}
 
 	@Override
 	public Result update(UpdateMaintenanceRequest updateMaintenanceRequest) {
-//		
-//		Maintenance maintenanceToUpdate = maintenanceRepository.findById(updateMaintenanceRequest.getId());
-//		Car car = new Car();
-//		car.setId(updateMaintenanceRequest.getCarId());
-//		maintenanceToUpdate.setDateReturned(updateMaintenanceRequest.getDateReturned());
-//		maintenanceToUpdate.setDateSent(updateMaintenanceRequest.getDateSent());
-//		maintenanceToUpdate.setDescription(updateMaintenanceRequest.getDescription());
-//		maintenanceToUpdate.setCar(car);
-//	
-		Maintenance maintenanceToUpdate = this.modelMapperService.forRequest().map(updateMaintenanceRequest, Maintenance.class);
-		
-		this.maintenanceRepository.save(maintenanceToUpdate);
 
+		Maintenance maintenanceToUpdate = this.modelMapperService.forRequest().map(updateMaintenanceRequest, Maintenance.class);
+		this.maintenanceRepository.save(maintenanceToUpdate);
 		return new SuccessResult("MAINTENANCE.UPDATED");
 	}
 
