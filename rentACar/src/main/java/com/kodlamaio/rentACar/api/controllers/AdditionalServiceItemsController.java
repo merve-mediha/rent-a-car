@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodlamaio.rentACar.business.abstracts.AdditionalServiceItemService;
-import com.kodlamaio.rentACar.business.request.additionalItems.CreateAdditionalServiceItemRequest;
-import com.kodlamaio.rentACar.business.request.additionalItems.DeleteAdditionalServiceItemRequest;
-import com.kodlamaio.rentACar.business.request.additionalItems.UpdateAdditionalServiceItemRequest;
+import com.kodlamaio.rentACar.business.request.additionalServiceItems.CreateAdditionalServiceItemRequest;
+import com.kodlamaio.rentACar.business.request.additionalServiceItems.DeleteAdditionalServiceItemRequest;
+import com.kodlamaio.rentACar.business.request.additionalServiceItems.UpdateAdditionalServiceItemRequest;
 import com.kodlamaio.rentACar.business.responses.additionalServiceItems.AdditionalServiceItemResponse;
 import com.kodlamaio.rentACar.business.responses.additionalServiceItems.ListAdditionalServiceItemResponse;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;

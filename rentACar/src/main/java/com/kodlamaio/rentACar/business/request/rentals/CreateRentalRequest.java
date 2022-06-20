@@ -1,6 +1,5 @@
 package com.kodlamaio.rentACar.business.request.rentals;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;

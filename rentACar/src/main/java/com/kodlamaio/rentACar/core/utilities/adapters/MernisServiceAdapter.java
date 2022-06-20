@@ -1,4 +1,4 @@
-package com.kodlamaio.rentACar.core.utilities.adapters.concretes;
+package com.kodlamaio.rentACar.core.utilities.adapters;
 
 import java.rmi.RemoteException;
 

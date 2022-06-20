@@ -2,9 +2,9 @@ package com.kodlamaio.rentACar.business.abstracts;
 
 import java.util.List;
 
-import com.kodlamaio.rentACar.business.request.additionals.CreateAdditionalServiceRequest;
-import com.kodlamaio.rentACar.business.request.additionals.DeleteAdditionalServiceRequest;
-import com.kodlamaio.rentACar.business.request.additionals.UpdateAdditionalServiceRequest;
+import com.kodlamaio.rentACar.business.request.additionalServices.CreateAdditionalServiceRequest;
+import com.kodlamaio.rentACar.business.request.additionalServices.DeleteAdditionalServiceRequest;
+import com.kodlamaio.rentACar.business.request.additionalServices.UpdateAdditionalServiceRequest;
 import com.kodlamaio.rentACar.business.responses.additionalServices.AdditionalServiceResponse;
 import com.kodlamaio.rentACar.business.responses.additionalServices.ListAdditionalServiceResponse;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;

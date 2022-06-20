@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kodlamaio.rentACar.business.abstracts.AdditionalServiceItemService;
-import com.kodlamaio.rentACar.business.request.additionalItems.CreateAdditionalServiceItemRequest;
-import com.kodlamaio.rentACar.business.request.additionalItems.DeleteAdditionalServiceItemRequest;
-import com.kodlamaio.rentACar.business.request.additionalItems.UpdateAdditionalServiceItemRequest;
+import com.kodlamaio.rentACar.business.request.additionalServiceItems.CreateAdditionalServiceItemRequest;
+import com.kodlamaio.rentACar.business.request.additionalServiceItems.DeleteAdditionalServiceItemRequest;
+import com.kodlamaio.rentACar.business.request.additionalServiceItems.UpdateAdditionalServiceItemRequest;
 import com.kodlamaio.rentACar.business.responses.additionalServiceItems.AdditionalServiceItemResponse;
 import com.kodlamaio.rentACar.business.responses.additionalServiceItems.ListAdditionalServiceItemResponse;
 import com.kodlamaio.rentACar.core.utilities.mapping.ModelMapperService;

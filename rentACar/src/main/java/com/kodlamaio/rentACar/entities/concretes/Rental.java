@@ -59,5 +59,8 @@ public class Rental {
 	@OneToMany (mappedBy="rental")
 	private List<AdditionalService> additionals;
 	
+	@OneToMany(mappedBy="rentals")
+	private List<RentalDetail> rentalDetails;
+	
 
 }
