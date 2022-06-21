@@ -1,5 +1,15 @@
 package com.kodlamaio.rentACar.business.request.rentalDetails;
 
-public class UpdateRentalDetailRequest {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateRentalDetailRequest {
+	private int id;
+	private double totalRentalPrice;
+	private int rentalId;
+	private int additionalServiceId;
 }
