@@ -49,5 +49,10 @@ public class User {
 
 	@OneToMany(mappedBy = "user")
 	List<Rental> rentals;
+	
+
+	@OneToMany(mappedBy="user")
+	List<Adress> adresses;
+	
 
 }

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.kodlamaio.rentACar.entities.concretes.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-	User getById(int id);
+	User findById(int id);
 	User findByEmail(String email);
 	
 }

@@ -29,6 +29,8 @@ public class Invoice {
 		private int invoiceNumber;
 		
 		
+		
+		
 		@ManyToOne
 		@JoinColumn(name="rental_details_id")
 		private RentalDetail rentalDetail;
