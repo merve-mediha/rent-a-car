@@ -9,11 +9,12 @@ import com.kodlamaio.rentACar.business.responses.rentalDetails.ListRentalDetailR
 import com.kodlamaio.rentACar.business.responses.rentalDetails.RentalDetailResponse;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
+import com.kodlamaio.rentACar.entities.concretes.RentalDetail;
 
 public interface RentalDetailService {
 	Result add(CreateRentalDetailRequest createRentalDetailRequest);
 	Result delete(DeleteRentalDetailRequest deleteRentalDetailRequest);
 	Result update(UpdateRentalDetailRequest updateRentalDetailRequest);
 	DataResult<List<ListRentalDetailResponse>> getAll();
-	DataResult<RentalDetailResponse> getById(int id);
+	DataResult<RentalDetail> getById(RentalDetailResponse rentalDetailResponse);
 }

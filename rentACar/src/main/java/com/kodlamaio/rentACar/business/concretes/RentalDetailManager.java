@@ -17,11 +17,7 @@ import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
 import com.kodlamaio.rentACar.core.utilities.results.SuccessDataResult;
 import com.kodlamaio.rentACar.core.utilities.results.SuccessResult;
-import com.kodlamaio.rentACar.dataAccess.abstracts.AdditionalServiceRepository;
 import com.kodlamaio.rentACar.dataAccess.abstracts.RentalDetailRepository;
-import com.kodlamaio.rentACar.dataAccess.abstracts.RentalRepository;
-import com.kodlamaio.rentACar.entities.concretes.AdditionalService;
-import com.kodlamaio.rentACar.entities.concretes.Rental;
 import com.kodlamaio.rentACar.entities.concretes.RentalDetail;
 
 @Service
@@ -42,8 +38,9 @@ public class RentalDetailManager implements RentalDetailService {
 
 	@Override
 	public Result delete(DeleteRentalDetailRequest deleteRentalDetailRequest) {
-		// TODO Auto-generated method stub
-		return null;
+		RentalDetail rentalDetail = modelMapperService.forRequest().map(deleteRentalDetailRequest, RentalDetail.class);
+		rentalDetailRepository.delete(rentalDetail);
+		return new SuccessResult("RENTAL DETAIL DELETED");
 	}
 
 	@Override
@@ -65,8 +62,10 @@ public class RentalDetailManager implements RentalDetailService {
 	}
 
 	@Override
-	public DataResult<RentalDetail> getById(Rental) {
-		RentalDetail rentalDetail = this.rentalDetailRepository.
-		return null;
+	public DataResult<RentalDetail> getById(RentalDetailResponse rentalDetailResponse) {
+		RentalDetail rentalDetail = this.modelMapperService.forResponse().map(rentalDetailResponse,	 RentalDetail.class);
+		rentalDetail = rentalDetailRepository.findById(rentalDetailResponse.getId());
+		
+		return new SuccessDataResult<RentalDetail>(rentalDetail);
 	}
 }
