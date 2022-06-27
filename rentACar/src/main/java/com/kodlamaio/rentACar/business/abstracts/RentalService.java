@@ -12,13 +12,10 @@ import com.kodlamaio.rentACar.core.utilities.results.Result;
 
 public interface RentalService {
 	Result add(CreateRentalRequest createRentalRequest);
-
 	Result update(UpdateRentalRequest updateRentalRequest);
-
 	Result delete(DeleteRentalRequest deleteRentalRequest);
-
 	DataResult<List<ListRentalResponse>> getall();
-
 	DataResult<RentalResponse> getById(int id);
+	Result updateState(int id);
 
 }

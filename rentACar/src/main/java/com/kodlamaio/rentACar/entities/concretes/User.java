@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,40 +21,44 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","rentals"})
 @Entity
 @Table(name = "users")
+
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-
-	@Column(name = "first_name")
-	private String firstName;
-
-	@Column(name = "last_name")
-	private String lastName;
-
-	@Column(name = "identity_number")
-	private String identityNumber;
-
-	@Column(name = "birthYear")
-	private int birthYear;
-
+	
 	@Column(name = "email")
 	private String email;
 
 	@Column(name = "password")
 	private String password;
 
-	@OneToMany(mappedBy = "user")
-	List<Rental> rentals;
-	
+//	@Column(name = "first_name")
+//	private String firstName;
+//
+//	@Column(name = "last_name")
+//	private String lastName;
+//
+//	@Column(name = "identity_number")
+//	private String identityNumber;
+//
+//	@Column(name = "birthYear")
+//	private int birthYear;
 
-	@OneToMany(mappedBy="user")
-	List<Adress> adresses;
-	
+
+
+//	@OneToMany(mappedBy = "user")
+//	List<Rental> rentals;
+//	
+//	
+//
+//	@OneToMany(mappedBy="user")
+//	List<Address> adresses;
+//	
 
 }

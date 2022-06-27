@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 public class CreateMaintenanceRequest {
 	private int id;
 	private String description;
-	private LocalDate dataSent;
-	private LocalDate dateReturned;
+	private LocalDate sentDate;
+	private LocalDate ReturnedDate;
 	private int carId;
-
 }

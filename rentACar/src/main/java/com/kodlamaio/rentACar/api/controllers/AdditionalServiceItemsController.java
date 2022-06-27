@@ -22,30 +22,35 @@ import com.kodlamaio.rentACar.core.utilities.results.Result;
 @RequestMapping("/api/aditionalServiceItems")
 public class AdditionalServiceItemsController {
 
-	AdditionalServiceItemService additionalItemService;
-	
-public AdditionalServiceItemsController(AdditionalServiceItemService additionalItemService) {
-	
-		this.additionalItemService = additionalItemService;
+	AdditionalServiceItemService additionalServiceItemService;
+
+	public AdditionalServiceItemsController(AdditionalServiceItemService additionalServiceItemService) {
+
+		this.additionalServiceItemService = additionalServiceItemService;
 	}
-@PostMapping("/add")
-public Result add(@RequestBody CreateAdditionalServiceItemRequest createAdditionalItemRequest) {
-	 return this.additionalItemService.add(createAdditionalItemRequest);
-}
-@PostMapping("/update")
-public Result update(@RequestBody UpdateAdditionalServiceItemRequest updateAdditionalItemRequest) {
-	return this.additionalItemService.update(updateAdditionalItemRequest);
-}
-@PostMapping("/delete")
-public Result delete(@RequestBody DeleteAdditionalServiceItemRequest deleteAdditionalItemRequest) {
-	return this.additionalItemService.delete(deleteAdditionalItemRequest);
-}
-@GetMapping("/getall")
-public DataResult<List<ListAdditionalServiceItemResponse>> getAll(){
-	return this.additionalItemService.getAll();
-}
-@GetMapping("/getbyid")
-public DataResult<AdditionalServiceItemResponse> getById(@RequestParam int id){
-	return this.additionalItemService.getById(id);
-}
+
+	@PostMapping("/add")
+	public Result add(@RequestBody CreateAdditionalServiceItemRequest createAdditionalItemRequest) {
+		return this.additionalServiceItemService.add(createAdditionalItemRequest);
+	}
+
+	@PostMapping("/update")
+	public Result update(@RequestBody UpdateAdditionalServiceItemRequest updateAdditionalItemRequest) {
+		return this.additionalServiceItemService.update(updateAdditionalItemRequest);
+	}
+
+	@PostMapping("/delete")
+	public Result delete(@RequestBody DeleteAdditionalServiceItemRequest deleteAdditionalItemRequest) {
+		return this.additionalServiceItemService.delete(deleteAdditionalItemRequest);
+	}
+
+	@GetMapping("/getall")
+	public DataResult<List<ListAdditionalServiceItemResponse>> getAll() {
+		return this.additionalServiceItemService.getAll();
+	}
+
+	@GetMapping("/getbyid")
+	public DataResult<AdditionalServiceItemResponse> getById(@RequestParam int id) {
+		return this.additionalServiceItemService.getById(id);
+	}
 }

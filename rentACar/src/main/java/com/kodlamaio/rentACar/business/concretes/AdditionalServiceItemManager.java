@@ -23,7 +23,7 @@ import com.kodlamaio.rentACar.entities.concretes.AdditionalServiceItem;
 public class AdditionalServiceItemManager implements AdditionalServiceItemService {
 	ModelMapperService modelMapperService;
 	AdditionalServiceItemRepository additionalItemRepository;
-@Autowired
+
 	public AdditionalServiceItemManager(ModelMapperService modelMapperService,
 			AdditionalServiceItemRepository additionalItemRepository) {
 		this.modelMapperService = modelMapperService;

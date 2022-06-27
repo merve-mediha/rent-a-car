@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetByIdColorResponse {
-	private int id;
+	private int name;
 
 }

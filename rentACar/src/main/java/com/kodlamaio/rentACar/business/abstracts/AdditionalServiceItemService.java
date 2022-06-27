@@ -11,11 +11,11 @@ import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
 
 public interface AdditionalServiceItemService {
-	Result add(CreateAdditionalServiceItemRequest createAdditionalItemRequest);
+	Result add(CreateAdditionalServiceItemRequest createAdditionalServiceItemRequest);
 
-	Result update(UpdateAdditionalServiceItemRequest updateAdditionalItemRequest);
+	Result update(UpdateAdditionalServiceItemRequest updateAdditionalServiceItemRequest);
 
-	Result delete(DeleteAdditionalServiceItemRequest deleteAdditionalItemRequest);
+	Result delete(DeleteAdditionalServiceItemRequest deleteAdditionalServiceItemReques);
 
 	DataResult<List<ListAdditionalServiceItemResponse>> getAll();
 

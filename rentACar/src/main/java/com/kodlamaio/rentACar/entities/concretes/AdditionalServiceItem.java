@@ -31,9 +31,9 @@ public class AdditionalServiceItem {
 	@Column(name="description")
 	private String description;
 	
-	@Column(name="additionalPrice")
-	private double additionalPrice;
+	@Column(name="additional_service _price")
+	private double additionalServicePrice;
 	
-	@OneToMany(mappedBy="additionalItem")
-	private List<AdditionalService> additionals;
+	@OneToMany(mappedBy="additionalServiceItem")
+	private List<OrderedAdditionalService> orderedAdditionalServices;
 }

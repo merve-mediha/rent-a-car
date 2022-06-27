@@ -108,7 +108,7 @@ public class CarManager implements CarService {
 		
 	}
 	private boolean checkBrandCount(int id) {
-		List<Car> cars = carRepository.getByBrandId(id);
+		List<Car> cars = carRepository.findByBrandId(id);
 		if(cars.size()<5) {
 			return false;
 		}else {

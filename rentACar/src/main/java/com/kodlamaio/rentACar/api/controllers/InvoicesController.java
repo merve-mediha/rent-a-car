@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kodlamaio.rentACar.business.abstracts.InvoiceService;
 import com.kodlamaio.rentACar.business.request.invoices.CreateInvoiceRequest;
+import com.kodlamaio.rentACar.business.request.invoices.DeleteInvoiceRequest;
+import com.kodlamaio.rentACar.business.request.invoices.UpdateInvoiceRequest;
 import com.kodlamaio.rentACar.business.responses.invoices.InvoiceResponse;
 import com.kodlamaio.rentACar.business.responses.invoices.ListInvoiceResponse;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
+import com.kodlamaio.rentACar.entities.concretes.AdditionalServiceItem;
 
 @RestController
 @RequestMapping("/api/invoices")
@@ -28,20 +31,32 @@ public class InvoicesController {
 	@PostMapping("/add")
 	public Result add(@RequestBody CreateInvoiceRequest createInvoiceRequest) {
 		return this.invoiceService.add(createInvoiceRequest);
-		
 	}
 	
-	@GetMapping("/getall")
-	public DataResult<List<ListInvoiceResponse>> getAll(){
-		return this.invoiceService.getall();
+	@PostMapping("/delete")
+	public Result delete(@RequestBody DeleteInvoiceRequest deleteInvoiceRequest) {
+		return this.invoiceService.delete(deleteInvoiceRequest);
 	}
 	
-	@GetMapping("/getbyid")
+	@PostMapping("/update")
+	public Result update(@RequestBody UpdateInvoiceRequest updateInvoiceRequest) {
+		return this.invoiceService.update(updateInvoiceRequest);
+	}
+	
+	@GetMapping("/getById")
 	public DataResult<InvoiceResponse> getById(@RequestParam int id){
 		return this.invoiceService.getById(id);
 	}
 	
-	
+	@GetMapping("getAll")
+	public DataResult<List<ListInvoiceResponse>> getAll(){
+		return this.invoiceService.getall();
+	}
+	@GetMapping("/getAllAdditionalServiceItems")
+	public DataResult<List<AdditionalServiceItem>> getAllAdditionalServiceItems(@RequestParam int rentalId){
+		return this.invoiceService.getAllAdditionalItems(rentalId);
+		
+	}
 	
 
 }

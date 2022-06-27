@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodlamaio.rentACar.business.abstracts.UserService;
+import com.kodlamaio.rentACar.business.request.individualCustomers.CreateIndividualCustomerRequest;
+import com.kodlamaio.rentACar.business.request.individualCustomers.DeleteIndividualCustomerRequest;
+import com.kodlamaio.rentACar.business.request.individualCustomers.UpdateIndividualCustomerRequest;
 import com.kodlamaio.rentACar.business.request.users.CreateUserRequest;
 import com.kodlamaio.rentACar.business.request.users.DeleteUserRequest;
 import com.kodlamaio.rentACar.business.request.users.UpdateUserRequest;
@@ -31,17 +34,17 @@ public class UsersController {
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody @Valid CreateUserRequest createUserRequest) throws NumberFormatException, RemoteException {
-		return this.UserService.add(createUserRequest);
+	public Result add(@RequestBody @Valid CreateIndividualCustomerRequest createIndividualCustomerRequest) throws NumberFormatException, RemoteException {
+		return this.UserService.add(createIndividualCustomerRequest);
 	}
 
 	@PostMapping("/update")
-	public Result update(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
-		return this.UserService.update(updateUserRequest);
+	public Result update(@RequestBody @Valid UpdateIndividualCustomerRequest updateIndividualCustomerRequest) {
+		return this.UserService.update(updateIndividualCustomerRequest);
 	}
 
 	@PostMapping("/delete")
-	public Result delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
+	public Result delete(@RequestBody @Valid DeleteIndividualCustomerRequest deleteUserRequest) {
 		return this.UserService.delete(deleteUserRequest);
 	}
 

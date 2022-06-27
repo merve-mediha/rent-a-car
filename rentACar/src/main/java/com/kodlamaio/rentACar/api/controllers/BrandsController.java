@@ -26,7 +26,7 @@ import com.kodlamaio.rentACar.core.utilities.results.Result;
 @RequestMapping("/api/brands")
 
 public class BrandsController { // Controller çıkış noktamız
-	@Autowired
+	
 	private BrandService brandService;
 
 	public BrandsController(BrandService brandService) {

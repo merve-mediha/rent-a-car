@@ -1,6 +1,7 @@
 package com.kodlamaio.rentACar.entities.concretes;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class Rental {
 	private int id;
 	
 	@Column(name="pickup_date")
-	private Date pickupDate;
+	private LocalDate pickupDate;
 	
 	@Column(name="return_date")
-	private Date returnDate;
+	private LocalDate returnDate;
 	
 	@Column(name="total_days")
 	private long totalDays;
@@ -57,10 +58,10 @@ public class Rental {
 	private City returnCityId;
 	
 	@OneToMany (mappedBy="rental")
-	private List<AdditionalService> additionals;
+	private List<OrderedAdditionalService> OrderedAdditionalServices;
 	
-	@OneToMany(mappedBy="rentals")
-	private List<RentalDetail> rentalDetails;
+	@OneToMany(mappedBy="rental")
+	private List<Invoice> invoices;
 	
 
 }

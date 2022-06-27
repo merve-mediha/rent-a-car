@@ -10,13 +10,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.kodlamaio.rentACar.business.abstracts.PersonCheckService;
 import com.kodlamaio.rentACar.business.abstracts.UserService;
 import com.kodlamaio.rentACar.business.request.users.CreateUserRequest;
 import com.kodlamaio.rentACar.business.request.users.DeleteUserRequest;
 import com.kodlamaio.rentACar.business.request.users.UpdateUserRequest;
 import com.kodlamaio.rentACar.business.responses.users.ListUserResponse;
 import com.kodlamaio.rentACar.business.responses.users.UserResponse;
+import com.kodlamaio.rentACar.core.utilities.adapters.abstracts.PersonCheckService;
 import com.kodlamaio.rentACar.core.utilities.mapping.ModelMapperService;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.ErrorResult;

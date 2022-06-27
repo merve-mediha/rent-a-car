@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListMaintenanceResponse {
+	private int id;
 	private String description;
-	private LocalDate dateSent;
-	private LocalDate dateReturned;
+	private LocalDate sentDate;
+	private LocalDate ReturnedDate;
 	private int carId;
-	
 
 }

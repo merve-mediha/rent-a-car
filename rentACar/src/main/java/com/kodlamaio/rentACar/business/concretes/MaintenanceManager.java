@@ -62,6 +62,8 @@ public class MaintenanceManager implements MaintenanceService {
 		this.maintenanceRepository.save(maintenanceToUpdate);
 		return new SuccessResult("MAINTENANCE.UPDATED");
 	}
+	
+	
 
 	@Override
 	public DataResult<List<ListMaintenanceResponse>> getAll() {
@@ -72,7 +74,6 @@ public class MaintenanceManager implements MaintenanceService {
 
 		return new SuccessDataResult<List<ListMaintenanceResponse>>(response,"MAİNTENANCES.GETTED");
 
-		//new  SuccessDataResult<List<MaintenanceResponse>>(maintenanceRepository.findAll());
 	}
 
 	@Override

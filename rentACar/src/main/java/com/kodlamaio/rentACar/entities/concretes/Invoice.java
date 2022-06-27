@@ -1,5 +1,7 @@
 package com.kodlamaio.rentACar.entities.concretes;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,12 +30,16 @@ public class Invoice {
 		@Column(name="invoice_number")
 		private int invoiceNumber;
 		
+		@Column(name="total_invoice_price")
+		private double totalInvoicePrice;
 		
+		@Column(name="current_date")
+		private LocalDate currentDate;
 		
 		
 		@ManyToOne
-		@JoinColumn(name="rental_details_id")
-		private RentalDetail rentalDetail;
+		@JoinColumn(name="rental_id")
+		private Rental rental;
 		
 		
 		

@@ -25,8 +25,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "maintenances","rentals" })
-
 @Table(name="cars")
 
 public class Car {
@@ -77,6 +75,8 @@ public class Car {
 	
 	@Column(name="minFindexScore")
 	private int minFindexScore;
+
+	
 
 	
 	

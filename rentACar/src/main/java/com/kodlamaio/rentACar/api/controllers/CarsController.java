@@ -42,10 +42,6 @@ public class CarsController {
 		return this.carService.delete(deleteCarRequest);
 	}
 	
-//	@GetMapping("/getbyid)
-//	public DataResult<Car> getById(@RequestBody CarResponse carResponse) {
-//		return carService.getById(carResponse);
-//	}
 	
 	@GetMapping("/getbyid")
 	public DataResult<CarResponse> getById(@RequestParam int id) {

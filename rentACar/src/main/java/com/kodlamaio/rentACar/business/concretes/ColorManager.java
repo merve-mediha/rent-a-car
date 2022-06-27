@@ -12,6 +12,7 @@ import com.kodlamaio.rentACar.business.request.colors.DeleteColorRequest;
 import com.kodlamaio.rentACar.business.request.colors.UpdateColorRequest;
 import com.kodlamaio.rentACar.business.responses.colors.ColorResponse;
 import com.kodlamaio.rentACar.business.responses.colors.ListColorResponse;
+import com.kodlamaio.rentACar.core.utilities.exceptions.BusinessException;
 import com.kodlamaio.rentACar.core.utilities.mapping.ModelMapperService;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
@@ -33,6 +34,7 @@ public class ColorManager implements ColorService {
 
 	@Override
 	public Result add(CreateColorRequest createColorRequest) {
+		checkIfColorExistsByName(createColorRequest.getName());
 //		Color color = new Color();
 //		color.setName(createColorRequest.getName());
 		Color color = this.modelMapperService.forRequest().map(createColorRequest, Color.class);
@@ -43,6 +45,7 @@ public class ColorManager implements ColorService {
 
 	@Override
 	public Result delete(DeleteColorRequest deleteColorRequest) {
+		checkIsColorNull(deleteColorRequest.getId());
 		int colorId= deleteColorRequest.getId();
 		this.colorRepository.deleteById(colorId);
 	return new SuccessResult("COLOR DELETED");
@@ -51,9 +54,8 @@ public class ColorManager implements ColorService {
 
 	@Override
 	public Result update(UpdateColorRequest updateColorRequest) {
-		
-//		Color colorToUpdate = colorRepository.findById(updateColorRequest.getId());
-//		updateColorRequest.setName(colorToUpdate.getName());
+		checkIfColorExistsByName(updateColorRequest.getName());
+		checkIsColorNull(updateColorRequest.getId());
 		Color color = this.modelMapperService.forRequest()
 				.map(updateColorRequest, Color.class);
 		this.colorRepository.save(color);
@@ -72,12 +74,27 @@ public class ColorManager implements ColorService {
 
 	@Override
 	public DataResult<ColorResponse> getById(int id) {
+		checkIsColorNull(id);
 		Color color = this.colorRepository.findById(id);
 		ColorResponse response = this.modelMapperService.forResponse()
 				.map(color, ColorResponse.class);
 		
 		
 		return new SuccessDataResult<ColorResponse>(response, "COLOR GETTED");
+	}
+	
+	private void checkIfColorExistsByName(String name) {
+		Color currentColor = this.colorRepository.findByName(name);
+		if (currentColor != null) {
+			throw new BusinessException("COLOR EXISTS");
+		}
+	}
+	
+	private void checkIsColorNull(int colorId) {
+		Color color = this.colorRepository.findById(colorId);
+		if (color==null) {
+			throw new BusinessException("COLOR COULD NOT FOUND");
+		}
 	}
 
 

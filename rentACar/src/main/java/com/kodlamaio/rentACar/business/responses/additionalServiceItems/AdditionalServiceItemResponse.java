@@ -9,5 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdditionalServiceItemResponse {
 	private int id;
+	private int name;
+	
 	
 }
