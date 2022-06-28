@@ -16,6 +16,6 @@ public interface CorporateCustomerService {
 	Result delete(DeleteCorporateCustomerRequest deleteCorporateCustomerRequest);
 	DataResult<CorporateCustomerResponse> getById(int id);
 	DataResult<List<ListCorporateCustomerResponse>> getAll();
-	
+	DataResult<List<ListCorporateCustomerResponse>> getAll(Integer pageNo, Integer pageSize);
 	
 }
