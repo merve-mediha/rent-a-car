@@ -34,17 +34,17 @@ public class UsersController {
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody @Valid CreateIndividualCustomerRequest createIndividualCustomerRequest) throws NumberFormatException, RemoteException {
-		return this.UserService.add(createIndividualCustomerRequest);
+	public Result add(@RequestBody @Valid CreateUserRequest createUserrRequest) throws NumberFormatException, RemoteException {
+		return this.UserService.add(createUserrRequest);
 	}
 
 	@PostMapping("/update")
-	public Result update(@RequestBody @Valid UpdateIndividualCustomerRequest updateIndividualCustomerRequest) {
-		return this.UserService.update(updateIndividualCustomerRequest);
+	public Result update(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
+		return this.UserService.update(updateUserRequest);
 	}
 
 	@PostMapping("/delete")
-	public Result delete(@RequestBody @Valid DeleteIndividualCustomerRequest deleteUserRequest) {
+	public Result delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
 		return this.UserService.delete(deleteUserRequest);
 	}
 

@@ -24,9 +24,11 @@ import com.kodlamaio.rentACar.core.utilities.results.Result;
 import com.kodlamaio.rentACar.core.utilities.results.SuccessDataResult;
 import com.kodlamaio.rentACar.core.utilities.results.SuccessResult;
 import com.kodlamaio.rentACar.dataAccess.abstracts.CarRepository;
+import com.kodlamaio.rentACar.dataAccess.abstracts.IndividualCustomerRepository;
 import com.kodlamaio.rentACar.dataAccess.abstracts.RentalRepository;
 import com.kodlamaio.rentACar.dataAccess.abstracts.UserRepository;
 import com.kodlamaio.rentACar.entities.concretes.Car;
+import com.kodlamaio.rentACar.entities.concretes.IndividualCustomer;
 import com.kodlamaio.rentACar.entities.concretes.Rental;
 import com.kodlamaio.rentACar.entities.concretes.User;
 @Service
@@ -36,17 +38,20 @@ public class RentalManager implements RentalService {
 	CarRepository carRepository;
 	ModelMapperService modelMapperService;
 	UserRepository userRepository;
-	@Autowired
+	IndividualCustomerRepository individualCustomerRepository;
 	FindexScoreCheckService findexScoreCheckService;
 	
+	
 
-
-	public RentalManager(RentalRepository rentalRepository,CarRepository carRepository,ModelMapperService modelMapperService, UserRepository userRepository,FindexScoreCheckService findexScoreCheckService) {
+	@Autowired
+	public RentalManager(RentalRepository rentalRepository,CarRepository carRepository,ModelMapperService modelMapperService, UserRepository userRepository,FindexScoreCheckService findexScoreCheckService,IndividualCustomerRepository individualCustomerRepository) {
 
 		this.rentalRepository = rentalRepository;
 		this.carRepository = carRepository;
 		this.modelMapperService = modelMapperService ;
 		this.userRepository = userRepository;
+		this.findexScoreCheckService=findexScoreCheckService;
+		this.individualCustomerRepository = individualCustomerRepository;
 		
 		
 	}
@@ -55,11 +60,12 @@ public class RentalManager implements RentalService {
 	public Result add(CreateRentalRequest createRentalRequest) {
 		
 		checkIfCarState(createRentalRequest.getCarId());
+		checkUserFindexScore(createRentalRequest);
+		checkDateToRentACar(createRentalRequest.getPickupDate(), createRentalRequest.getReturnDate());
 		
 		Rental rental = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
 		Car car = this.carRepository.findById(createRentalRequest.getCarId());
-		//CheckIfCarExist
-		//CheckIfUserExist
+		
 		
 		int diffDate = (int) ChronoUnit.DAYS.between(rental.getPickupDate(), rental.getReturnDate());
 		rental.setTotalDays(diffDate);
@@ -171,13 +177,14 @@ public class RentalManager implements RentalService {
 	}
 	
 	
-//	private void checkUserFindexScore(CreateRentalRequest createRentalRequest) {
-//		Car car = this.carRepository.findById(createRentalRequest.getCarId());
-//		User user = this.userRepository.findById(createRentalRequest.getUserId());
-//		if (findexScoreCheckService.checkFindexScore(user.getIdentityNumber() > car.getMinFindexScore()))
-//		
-//		
-//	}
+	private void checkUserFindexScore(CreateRentalRequest createRentalRequest) {
+		Car car = this.carRepository.findById(createRentalRequest.getCarId());
+		IndividualCustomer user = this.individualCustomerRepository.findById(createRentalRequest.getIndividualCustomerId()).get();
+		if (findexScoreCheckService.CheckIfCorrectPerso(user.getIdentityNumber()) > car.getMinFindexScore()) {
+			throw new BusinessException("USER.IS.NOT.ENO");
+		}
+		
+	}
 
 }
 
