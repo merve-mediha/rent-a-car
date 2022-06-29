@@ -39,40 +39,32 @@ public class BrandManager implements BrandService {
 	@Override
 	public Result add(CreateBrandRequest createBrandRequest) {
 		checkIfExistByName(createBrandRequest.getName());
-	
-//		Brand brand = new Brand();
 		Brand brand =  this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
-		
-//		brand.setName(createBrandRequest.getName());
 		this.brandRepository.save(brand);
 		return new SuccessResult("BRAND ADDED");
 	}
-	
-	private void checkIfExistByName(String name) {
-	Brand currentBrand = this.brandRepository.findByName(name);
-	if(currentBrand!=null ) {
-		throw new BusinessException("BRAND EXISTS");
-	}
-	}
-	//Business Exception girince metod dan mesajı atar
 	
 	
 	
 	
 	@Override
 	public Result delete(DeleteBrandRequest deleteBrandRequest) {
+		checkIsBrandNull(deleteBrandRequest.getId());
 		int brandId = deleteBrandRequest.getId();
 		this.brandRepository.deleteById(brandId);
 		return new SuccessResult("BRAND DELETED");
 	}
+	
+	
+	
 
 	
 
 	@Override
 	public Result update(UpdateBrandRequest updateBrandRequest) {
+		checkIsBrandNull(updateBrandRequest.getId());
+		checkIfExistByName(updateBrandRequest.getName());
 		Brand brandToUpdate = modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
-//		Brand brandToUpdate = brandRepository.findById(updateBrandRequest.getId());
-//		brandToUpdate.setName(updateBrandRequest.getName());   modelMApper varsa setlemeye gerek yok
 		this.brandRepository.save(brandToUpdate);
 		return new SuccessResult("BRAND UPDATED");
 		
@@ -85,41 +77,31 @@ public class BrandManager implements BrandService {
 		List<ListBrandResponse> response  = brands.stream().map(brand->this.modelMapperService.forResponse()
 				.map(brand,ListBrandResponse.class)).collect(Collectors.toList());
 		return new SuccessDataResult<List<ListBrandResponse>>(response);
-		
-		
+
 	} 
-
-//	@Override
-//	public DataResult<List<Brand>> getAll() {
-//		
-//		return new SuccessDataResult<List<Brand>>(this.brandRepository.findAll());
-//	}
-
-//	@Override
-//	public DataResult<Brand> getById(int id) {
-//		Brand brand = new Brand();
-//		for (Brand item : brandRepository.findAll()) {
-//			if (item.getId() == id) {
-//				brand = item;
-//			}
-//		}
-//		return new SuccessDataResult<Brand>(brand);
-//	}
-//
 
 	@Override
 	public DataResult<BrandResponse> getById( int id){
+		checkIsBrandNull(id);
 		Brand brand  =  brandRepository.findById(id);
 		BrandResponse response = this.modelMapperService.forResponse().map(brand, BrandResponse.class);
 		return new SuccessDataResult<BrandResponse>(response,"BRAND.GETTED"); 
 		
 	}
+	
+	private void checkIfExistByName(String name) {
+		Brand currentBrand = this.brandRepository.findByName(name);
+		if(currentBrand!=null ) {
+			throw new BusinessException("BRAND EXISTS");
+		}
+		}
 
-
-
-
-
-
+	private void checkIsBrandNull(int brandId) {
+		Brand brand = this.brandRepository.findById(brandId);
+		if(brand==null) {
+			throw new BusinessException("THERE IS NOT BRAND");
+		}
+	}
 }
 
 

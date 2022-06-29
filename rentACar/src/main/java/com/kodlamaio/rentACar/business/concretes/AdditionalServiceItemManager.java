@@ -24,6 +24,7 @@ public class AdditionalServiceItemManager implements AdditionalServiceItemServic
 	ModelMapperService modelMapperService;
 	AdditionalServiceItemRepository additionalItemRepository;
 
+	@Autowired
 	public AdditionalServiceItemManager(ModelMapperService modelMapperService,
 			AdditionalServiceItemRepository additionalItemRepository) {
 		this.modelMapperService = modelMapperService;

@@ -24,15 +24,19 @@ import com.kodlamaio.rentACar.dataAccess.abstracts.UserRepository;
 import com.kodlamaio.rentACar.entities.concretes.User;
 @Service
 public class UserManager implements UserService{
-	@Autowired
 	UserRepository userRepository;
-	@Autowired
 	ModelMapperService modelMapperService;
-	@Autowired
 	PersonCheckService personCheckService;
 	
 	
 	
+	@Autowired
+	public UserManager(UserRepository userRepository, ModelMapperService modelMapperService,
+			PersonCheckService personCheckService) {
+		this.userRepository = userRepository;
+		this.modelMapperService = modelMapperService;
+		this.personCheckService = personCheckService;
+	}
 
 	@Override
 	public Result add(CreateUserRequest createUserRequest) {

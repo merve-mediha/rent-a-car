@@ -22,7 +22,7 @@ import com.kodlamaio.rentACar.core.utilities.results.Result;
 @RequestMapping("/api/corporatecustomers")
 public class CorporateCustomersController {
 	CorporateCustomerService corporateCustomerService;
-
+	
 	public CorporateCustomersController(CorporateCustomerService corporateCustomerService) {
 		this.corporateCustomerService = corporateCustomerService;
 	}

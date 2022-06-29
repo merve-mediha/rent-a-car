@@ -22,10 +22,16 @@ import com.kodlamaio.rentACar.core.utilities.results.Result;
 @RestController
 @RequestMapping("/api/orderedAdditionalServices")
 public class OrderedAdditionalServicesController {
-	@Autowired
+	
 	OrderedAdditionalServicesService orderedAdditionalServicesService;
 	
 	
+	public OrderedAdditionalServicesController(OrderedAdditionalServicesService orderedAdditionalServicesService) {
+		this.orderedAdditionalServicesService = orderedAdditionalServicesService;
+	}
+
+	
+
 	@PostMapping("/add")
 	public Result add(@RequestBody CreateOrderedAdditionalServiceRequest createOrderedAdditionalServiceRequest) {
 		

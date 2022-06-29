@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateBrandRequest {
 	private String name;
-	private int id;
 	
 
 }

@@ -66,14 +66,11 @@ public class RentalManager implements RentalService {
 		Rental rental = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
 		Car car = this.carRepository.findById(createRentalRequest.getCarId());
 		
-		
 		int diffDate = (int) ChronoUnit.DAYS.between(rental.getPickupDate(), rental.getReturnDate());
 		rental.setTotalDays(diffDate);
 		double totalPrice = calculateTotalPrice(rental, car.getDailyPrice());
-		 
 		rental.setPickupCityId(car.getCity());
 		rental.setTotalPrice(totalPrice);
-		
 		rentalRepository.save(rental);
 		return new SuccessResult("RENTAL ADDED");
 		
@@ -82,23 +79,15 @@ public class RentalManager implements RentalService {
 
 	@Override
 	public Result update(UpdateRentalRequest updateRentalRequest) {
-		
 		checkIfCarState(updateRentalRequest.getCarId());
 		checkDateToRentACar(updateRentalRequest.getPickupDate(), updateRentalRequest.getReturnDate());
-		
-		
-		
 		Rental rentalToUpdate = this.modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
 		Car car = this.carRepository.findById(updateRentalRequest.getCarId());
-
-
 		int diffDate = (int) ChronoUnit.DAYS.between(rentalToUpdate.getPickupDate(), rentalToUpdate.getReturnDate());
 		rentalToUpdate.setTotalDays(diffDate);
 		double totalPrice = calculateTotalPrice(rentalToUpdate, car.getDailyPrice());
-		 
 		rentalToUpdate.setPickupCityId(car.getCity());
 		rentalToUpdate.setTotalPrice(totalPrice);
-		
 		rentalRepository.save(rentalToUpdate);
 		return new SuccessResult("RENTAL UPDATED");
 	}
@@ -108,7 +97,6 @@ public class RentalManager implements RentalService {
 		Rental rental = new Rental();
 		rental.setId(deleteRentalRequest.getId());
 		this.rentalRepository.delete(rental);
-
 		return new SuccessDataResult<Rental>("RENTAL.DELETED"+rental.getId());
 	}
 
@@ -179,7 +167,7 @@ public class RentalManager implements RentalService {
 	
 	private void checkUserFindexScore(CreateRentalRequest createRentalRequest) {
 		Car car = this.carRepository.findById(createRentalRequest.getCarId());
-		IndividualCustomer user = this.individualCustomerRepository.findById(createRentalRequest.getIndividualCustomerId()).get();
+		IndividualCustomer user = this.individualCustomerRepository.findById(createRentalRequest.getIndividualCustomerId());
 		if (findexScoreCheckService.CheckIfCorrectPerso(user.getIdentityNumber()) > car.getMinFindexScore()) {
 			throw new BusinessException("USER.IS.NOT.ENO");
 		}

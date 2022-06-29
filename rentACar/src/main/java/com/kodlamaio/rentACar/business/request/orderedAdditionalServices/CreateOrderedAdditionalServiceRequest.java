@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderedAdditionalServiceRequest {
-	private int id;
 	private int totalDays;
 	private double totalPrice;
 	private LocalDate pickupDate;

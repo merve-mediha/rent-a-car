@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kodlamaio.rentACar.business.abstracts.InvoiceService;
@@ -37,7 +38,7 @@ public class InvoiceManager implements InvoiceService {
 	private AdditionalServiceItemRepository additionalServiceItemRepository;
 	
 	
-	
+	@Autowired
 	public InvoiceManager(InvoiceRepository invoiceRepository, ModelMapperService modelMapperService,
 			OrderedAdditionalServiceRepository orderedAdditionalServiceRepository, RentalRepository rentalRepository,
 			AdditionalServiceItemRepository additionalServiceItemRepository) {
@@ -51,7 +52,7 @@ public class InvoiceManager implements InvoiceService {
 	@Override
 	public Result add(CreateInvoiceRequest createInvoiceRequest) {
 		Invoice invoice= modelMapperService.forRequest().map(createInvoiceRequest, Invoice.class);
-		invoice.setCurrentDate(LocalDate.now());
+		invoice.setPresentDate(LocalDate.now());
 		invoice.setTotalInvoicePrice(calculateTotalInvoicePrice(createInvoiceRequest.getRentalId()));
 		
 		
@@ -74,7 +75,7 @@ public class InvoiceManager implements InvoiceService {
 
 	@Override
 	public DataResult<List<AdditionalServiceItem>> getAllAdditionalItems(int rentalId) {
-		List<OrderedAdditionalService> orderedAdditionalServices = this.orderedAdditionalServiceRepository.getAllByRentalId(rentalId);
+		List<OrderedAdditionalService> orderedAdditionalServices = this.orderedAdditionalServiceRepository.findAllByRentalId(rentalId);
 		List<AdditionalServiceItem> additionalServiceItems = new ArrayList<AdditionalServiceItem>();
 		for (OrderedAdditionalService orderedAdditionalService : orderedAdditionalServices) {
 			AdditionalServiceItem additionalServiceItem = this.additionalServiceItemRepository.findById(orderedAdditionalService.getAdditionalServiceItem().getId());
@@ -102,7 +103,7 @@ public class InvoiceManager implements InvoiceService {
 
 	private double TotalRentalAdditionalPrice(int id) {
 		double totalOrderedAdditionalService=0;
-		List<OrderedAdditionalService> orderedAdditionalServices=this.orderedAdditionalServiceRepository.getAllByRentalId(id);
+		List<OrderedAdditionalService> orderedAdditionalServices=this.orderedAdditionalServiceRepository.findAllByRentalId(id);
 		for(OrderedAdditionalService orderedAdditionalService: orderedAdditionalServices) {
 			totalOrderedAdditionalService += orderedAdditionalService.getTotalPrice();
 		}

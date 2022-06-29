@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="additionalServiceItems")
+@Table(name="additional_service_items")
 public class AdditionalServiceItem {
 	
 	@Id
@@ -31,8 +31,8 @@ public class AdditionalServiceItem {
 	@Column(name="description")
 	private String description;
 	
-	@Column(name="additional_service _price")
-	private double additionalServicePrice;
+	@Column(name="daily_price")
+	private double dailyPrice;
 	
 	@OneToMany(mappedBy="additionalServiceItem")
 	private List<OrderedAdditionalService> orderedAdditionalServices;

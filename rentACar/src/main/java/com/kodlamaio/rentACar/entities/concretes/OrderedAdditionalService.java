@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="orderedAdditionalServices")
+@Table(name="ordered_additional_services")
 public class OrderedAdditionalService {
 	
 	@Id
@@ -40,7 +40,7 @@ public class OrderedAdditionalService {
 	private LocalDate returnDate;
 	
 	@ManyToOne
-	@JoinColumn(name="additionalServiceItem_id")
+	@JoinColumn(name="additional_service_item_id")
 	private AdditionalServiceItem additionalServiceItem;
 	
 	@ManyToOne

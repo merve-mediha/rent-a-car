@@ -6,5 +6,6 @@ import com.kodlamaio.rentACar.entities.concretes.CorporateCustomer;
 
 public interface CorporateCustomerRepository extends JpaRepository<CorporateCustomer, Integer> {
 	CorporateCustomer findByTaxNumber(String taxNumber);
+	CorporateCustomer findById(int id);
 
 }

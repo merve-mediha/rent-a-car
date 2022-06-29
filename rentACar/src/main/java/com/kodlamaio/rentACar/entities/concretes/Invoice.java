@@ -33,8 +33,8 @@ public class Invoice {
 		@Column(name="total_invoice_price")
 		private double totalInvoicePrice;
 		
-		@Column(name="current_date")
-		private LocalDate currentDate;
+		@Column(name="present_date")
+		private LocalDate presentDate;
 		
 		
 		@ManyToOne

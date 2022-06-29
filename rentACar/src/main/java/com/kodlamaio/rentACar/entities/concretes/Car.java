@@ -65,7 +65,7 @@ public class Car {
 	private City city;
 	
 	@Column(name="carPlate")
-	private String CarPlate;
+	private String carPlate;
 	
 	@Column(name="kilometer")
 	private double kilometer;

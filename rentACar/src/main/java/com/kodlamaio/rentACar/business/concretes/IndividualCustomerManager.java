@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class IndividualCustomerManager implements IndividualCustomerService{
 	
 
 	
-
+	@Autowired
 	public IndividualCustomerManager(ModelMapperService modelMapperService,
 			IndividualCustomerRepository individualCustomerRepository, PersonCheckService personCheckService) {
 		this.modelMapperService = modelMapperService;
@@ -76,7 +77,7 @@ public class IndividualCustomerManager implements IndividualCustomerService{
 	@Override
 	public DataResult<IndividualCustomerResponse> getById(int id) {
 		checkIfUserExists(id);
-		IndividualCustomer individualCustomer= this.individualCustomerRepository.findById(id).get();
+		IndividualCustomer individualCustomer= this.individualCustomerRepository.findById(id);
 		IndividualCustomerResponse response = this.modelMapperService.forResponse().map(individualCustomer, IndividualCustomerResponse.class);
 		return new SuccessDataResult<IndividualCustomerResponse> (response);
 	}
@@ -111,14 +112,14 @@ public class IndividualCustomerManager implements IndividualCustomerService{
 	}
 	
 	private void checkIfUserExists(int id) {
-		IndividualCustomer individualCustomer = this.individualCustomerRepository.findById(id).get();
+		IndividualCustomer individualCustomer = this.individualCustomerRepository.findById(id);
 		if(individualCustomer==null) {
 			throw new BusinessException("THIS USER DOES NOT EXIST");
 		}
 	}
 	
 	private void checkUserUpdateEmail(int userId, String email) {
-		IndividualCustomer individualCustomer = this.individualCustomerRepository.findById(userId).get();
+		IndividualCustomer individualCustomer = this.individualCustomerRepository.findById(userId);
 		
 		if (individualCustomer.getEmail() != email) {
 			checkUserEmail(email);

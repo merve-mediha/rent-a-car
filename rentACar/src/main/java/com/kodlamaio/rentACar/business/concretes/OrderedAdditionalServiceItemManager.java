@@ -3,6 +3,7 @@ package com.kodlamaio.rentACar.business.concretes;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kodlamaio.rentACar.business.abstracts.OrderedAdditionalServicesService;
@@ -25,6 +26,7 @@ public class OrderedAdditionalServiceItemManager implements OrderedAdditionalSer
 	ModelMapperService modelMapperService;
 	OrderedAdditionalServiceRepository orderedAdditionalServiceRepository;
 	
+	@Autowired
 	public OrderedAdditionalServiceItemManager(ModelMapperService modelMapperService,
 			OrderedAdditionalServiceRepository orderedAdditionalServiceRepository) {
 		this.modelMapperService = modelMapperService;

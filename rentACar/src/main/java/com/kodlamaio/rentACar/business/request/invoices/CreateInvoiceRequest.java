@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateInvoiceRequest {
-	private int id;
 	private int invoiceNumber;
 	private double totalInvoicePrice;
 	private LocalDate currentDate;

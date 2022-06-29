@@ -25,16 +25,19 @@ public class Address {
 	@Column
 	private int id;
 	
-	@Column(name="contactAdress")
-	private String contactAdress;
+	@Column(name="address")
+	private String address;
 	
-	@Column(name="billingAdress")
-	private String billingAdress;
+	@Column(name="contact_address")
+	private String contactAddress;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
+	@Column(name="billing_address")
+	private String billingAddress;
 	
+//	@ManyToOne
+//	@JoinColumn(name="cutomer_id")
+//	private Customer customer;
+//	
 	
 
 }

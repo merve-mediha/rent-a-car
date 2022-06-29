@@ -29,7 +29,6 @@ public class MaintenanceManager implements MaintenanceService {
 	
 	@Autowired
 	public MaintenanceManager(MaintenanceRepository maintenanceRepository, ModelMapperService modelMapperService,CarRepository carRepository) {
-
 		this.maintenanceRepository = maintenanceRepository;
 		this.modelMapperService = modelMapperService;
 		this.carRepository = carRepository;
@@ -83,6 +82,5 @@ public class MaintenanceManager implements MaintenanceService {
 
 		return new SuccessDataResult<MaintenanceResponse>(response,"MAINTENANCE.GETTED");
 		
-		//new SuccessDataResult<MaintenanceResponse>(this.maintenanceRepository.findById(maintenanceResponse.getId()));
 	}
 }

@@ -11,11 +11,16 @@ import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
 
 public interface AddressService {
-	Result add(CreateAddressRequest createAddress);
+	Result addSameAddress(CreateAddressRequest createAddressRequest);
+	Result addDifferentAddress(CreateAddressRequest createAddressRequest);
 	Result delete(DeleteAddressRequest deleteAddressRequest);
-	Result update(UpdateAddressRequest updateAddressRequest);
+	Result updateSameAddress(UpdateAddressRequest updateAddressRequest);
+	Result updateDifferentAddress(UpdateAddressRequest updateAddressRequest);
 	DataResult<AddressResponse> getById(int id);
 	DataResult<List<ListAddressResponse>> getAll();
+//	DataResult<List<ListAddressResponse>> getAllBillingAddress(int userId, int addressType);
+//	DataResult<List<ListAddressResponse>> getAllContactAddress(int userId, int addressType);
+	
 	
 
 }

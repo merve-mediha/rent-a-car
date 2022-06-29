@@ -20,7 +20,7 @@ import com.kodlamaio.rentACar.core.utilities.results.Result;
 @RestController
 @RequestMapping("/api/colors")
 public class ColorsController {
-	@Autowired
+	
 	private ColorService colorService;
 	
 	
