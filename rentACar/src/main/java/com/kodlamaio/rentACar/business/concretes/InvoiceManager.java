@@ -14,6 +14,7 @@ import com.kodlamaio.rentACar.business.request.invoices.DeleteInvoiceRequest;
 import com.kodlamaio.rentACar.business.request.invoices.UpdateInvoiceRequest;
 import com.kodlamaio.rentACar.business.responses.invoices.InvoiceResponse;
 import com.kodlamaio.rentACar.business.responses.invoices.ListInvoiceResponse;
+import com.kodlamaio.rentACar.core.utilities.exceptions.BusinessException;
 import com.kodlamaio.rentACar.core.utilities.mapping.ModelMapperService;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
@@ -51,6 +52,8 @@ public class InvoiceManager implements InvoiceService {
 
 	@Override
 	public Result add(CreateInvoiceRequest createInvoiceRequest) {
+		checkInvoiceNumber(createInvoiceRequest.getInvoiceNumber());
+		checkRentalExists(createInvoiceRequest.getRentalId());
 		Invoice invoice= modelMapperService.forRequest().map(createInvoiceRequest, Invoice.class);
 		invoice.setPresentDate(LocalDate.now());
 		invoice.setTotalInvoicePrice(calculateTotalInvoicePrice(createInvoiceRequest.getRentalId()));
@@ -69,6 +72,7 @@ public class InvoiceManager implements InvoiceService {
 
 	@Override
 	public Result delete(DeleteInvoiceRequest deleteInvoiceRequest) {
+		checkInvoiceExists(deleteInvoiceRequest.getId());
 		this.invoiceRepository.deleteById(deleteInvoiceRequest.getId());
 		return new SuccessResult("INVOICE DELETED");
 	}
@@ -96,6 +100,7 @@ public class InvoiceManager implements InvoiceService {
 
 	@Override
 	public DataResult<InvoiceResponse> getById(int id) {
+		checkInvoiceExists(id);
 		Invoice invoice = this.invoiceRepository.findById(id);
 		InvoiceResponse invoiceResponse = this.modelMapperService.forResponse().map(invoice, InvoiceResponse.class);
 		return new SuccessDataResult<InvoiceResponse>(invoiceResponse);
@@ -115,5 +120,23 @@ public class InvoiceManager implements InvoiceService {
 		double totalInvoicePrice = rental.getTotalPrice()+TotalRentalAdditionalPrice(rentalId);
 		return totalInvoicePrice;
 		
+	}
+	
+	private void checkRentalExists(int rentalId) {
+		this.rentalRepository.findRentalById(rentalId);
+	}
+	
+	private void checkInvoiceExists(int invoiceId) {
+		Invoice invoice = this.invoiceRepository.findById(invoiceId);
+		if(invoice==null) {
+			throw new BusinessException("THIS INVOICE DOES NOT EXIST");
+		}
+	}
+	
+	private void checkInvoiceNumber(int invoiceNumber) {
+		Invoice invoice = this.invoiceRepository.findByInvoiceNumber(invoiceNumber);
+		if (invoice != null) {
+			throw new BusinessException("THIS.INVOICE.ALREADY.EXISTS");
+		}
 	}
 }

@@ -12,6 +12,7 @@ import com.kodlamaio.rentACar.business.request.additionalServiceItems.DeleteAddi
 import com.kodlamaio.rentACar.business.request.additionalServiceItems.UpdateAdditionalServiceItemRequest;
 import com.kodlamaio.rentACar.business.responses.additionalServiceItems.AdditionalServiceItemResponse;
 import com.kodlamaio.rentACar.business.responses.additionalServiceItems.ListAdditionalServiceItemResponse;
+import com.kodlamaio.rentACar.core.utilities.exceptions.BusinessException;
 import com.kodlamaio.rentACar.core.utilities.mapping.ModelMapperService;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
@@ -33,24 +34,28 @@ public class AdditionalServiceItemManager implements AdditionalServiceItemServic
 
 	@Override
 	public Result add(CreateAdditionalServiceItemRequest createAdditionalItemRequest) {
+		checkIfItemExistsByName(createAdditionalItemRequest.getName());
 		AdditionalServiceItem additionalItem = this.modelMapperService.forRequest().map(createAdditionalItemRequest,
 				AdditionalServiceItem.class);
 		this.additionalItemRepository.save(additionalItem);
-		return new SuccessResult("ADDITIONAL.ITEM.ADDED");
+		return new SuccessResult("ADDITIONAL ITEM ADDED");
 	}
 
 	@Override
 	public Result update(UpdateAdditionalServiceItemRequest updateAdditionalItemRequest) {
+		checkIfItemExists(updateAdditionalItemRequest.getId());
+		checkIfItemExistsByName(updateAdditionalItemRequest.getName());
 		AdditionalServiceItem additionalItemToUpdate = this.modelMapperService.forRequest().map(updateAdditionalItemRequest,
 				AdditionalServiceItem.class);
 		this.additionalItemRepository.save(additionalItemToUpdate);
-		return new SuccessResult("ADDITIONAL.ITEM.UPDATED");
+		return new SuccessResult("ADDITIONAL ITEM UPDATED");
 	}
 
 	@Override
 	public Result delete(DeleteAdditionalServiceItemRequest deleteAdditionalItemRequest) {
+		checkIfItemExists(deleteAdditionalItemRequest.getId());
 		this.additionalItemRepository.deleteById(deleteAdditionalItemRequest.getId());
-		return new SuccessResult("ADDITIONAL.ITEM.DELETED");
+		return new SuccessResult("ADDITIONAL ITEM DELETED");
 	}
 
 	@Override
@@ -65,9 +70,24 @@ public class AdditionalServiceItemManager implements AdditionalServiceItemServic
 
 	@Override
 	public DataResult<AdditionalServiceItemResponse> getById(int id) {
+		checkIfItemExists(id);
 		AdditionalServiceItem additionalItem = this.additionalItemRepository.findById(id);
 		AdditionalServiceItemResponse response = this.modelMapperService.forResponse().map(additionalItem,
 				AdditionalServiceItemResponse.class);
 		return new SuccessDataResult<AdditionalServiceItemResponse>(response);
 	}
+	
+	private void checkIfItemExistsByName(String name) {
+		AdditionalServiceItem additionalServiceItem = this.additionalItemRepository.findByName(name);
+		if(additionalServiceItem != null)
+			throw new BusinessException("ITEM ALREADY EXISTS");
+	}
+	
+	private void checkIfItemExists(int id) {
+		AdditionalServiceItem additionalServiceItem = this.additionalItemRepository.findById(id);
+		if (additionalServiceItem == null) {
+			throw new BusinessException("THIS ITEM Is NOT EXISTS");
+		}
+	}
+	
 }

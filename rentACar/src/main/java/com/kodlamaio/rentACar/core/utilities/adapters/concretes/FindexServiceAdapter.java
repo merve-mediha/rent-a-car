@@ -19,7 +19,7 @@ public class FindexServiceAdapter implements FindexScoreCheckService {
 	
 	
 	@Override
-	public int CheckIfCorrectPerso(String identityNumber) {
+	public int CheckIfCorrectPerson(String identityNumber) {
 		int score = calculatePersonScore(identityNumber);
 		return score;
 	}

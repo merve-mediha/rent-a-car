@@ -16,7 +16,7 @@ public class CreateRentalRequest {
 	private long totalDays;
 	private double totalPrice;
 	private int carId;
-	private int userId;
+	private int customerId;
 	private int pickupCityId;
 	private int returnCityId;
 	private int individualCustomerId;

@@ -16,7 +16,7 @@ public class UpdateRentalRequest {
 	private int totalDays;
 	private double totalPrice;
 	private int carId;
-	private int userId;
+	private int customerId;
 	private int pickupCityId;
 	private int returnCityId;
 }

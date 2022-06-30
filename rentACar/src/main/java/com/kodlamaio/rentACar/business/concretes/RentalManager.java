@@ -24,10 +24,12 @@ import com.kodlamaio.rentACar.core.utilities.results.Result;
 import com.kodlamaio.rentACar.core.utilities.results.SuccessDataResult;
 import com.kodlamaio.rentACar.core.utilities.results.SuccessResult;
 import com.kodlamaio.rentACar.dataAccess.abstracts.CarRepository;
+import com.kodlamaio.rentACar.dataAccess.abstracts.CorporateCustomerRepository;
 import com.kodlamaio.rentACar.dataAccess.abstracts.IndividualCustomerRepository;
 import com.kodlamaio.rentACar.dataAccess.abstracts.RentalRepository;
 import com.kodlamaio.rentACar.dataAccess.abstracts.UserRepository;
 import com.kodlamaio.rentACar.entities.concretes.Car;
+import com.kodlamaio.rentACar.entities.concretes.CorporateCustomer;
 import com.kodlamaio.rentACar.entities.concretes.IndividualCustomer;
 import com.kodlamaio.rentACar.entities.concretes.Rental;
 import com.kodlamaio.rentACar.entities.concretes.User;
@@ -39,12 +41,15 @@ public class RentalManager implements RentalService {
 	ModelMapperService modelMapperService;
 	UserRepository userRepository;
 	IndividualCustomerRepository individualCustomerRepository;
+	CorporateCustomerRepository corporateCustomerRepository;
 	FindexScoreCheckService findexScoreCheckService;
 	
 	
 
 	@Autowired
-	public RentalManager(RentalRepository rentalRepository,CarRepository carRepository,ModelMapperService modelMapperService, UserRepository userRepository,FindexScoreCheckService findexScoreCheckService,IndividualCustomerRepository individualCustomerRepository) {
+	public RentalManager(RentalRepository rentalRepository,CarRepository carRepository,ModelMapperService modelMapperService, 
+			UserRepository userRepository,FindexScoreCheckService findexScoreCheckService,
+			IndividualCustomerRepository individualCustomerRepository,CorporateCustomerRepository corporateCustomerRepository) {
 
 		this.rentalRepository = rentalRepository;
 		this.carRepository = carRepository;
@@ -52,50 +57,81 @@ public class RentalManager implements RentalService {
 		this.userRepository = userRepository;
 		this.findexScoreCheckService=findexScoreCheckService;
 		this.individualCustomerRepository = individualCustomerRepository;
+		this.corporateCustomerRepository = corporateCustomerRepository;
 		
 		
 	}
 
 	@Override
-	public Result add(CreateRentalRequest createRentalRequest) {
+	public Result addIndividualCustomer(CreateRentalRequest createRentalRequest) {
 		
 		checkIfCarState(createRentalRequest.getCarId());
-		checkUserFindexScore(createRentalRequest);
 		checkDateToRentACar(createRentalRequest.getPickupDate(), createRentalRequest.getReturnDate());
-		
+		checkUserFindexScore(createRentalRequest.getCarId(), createRentalRequest.getCustomerId());
+		checkIndividualCustomerExists(createRentalRequest.getCustomerId());
 		Rental rental = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
-		Car car = this.carRepository.findById(createRentalRequest.getCarId());
-		
-		int diffDate = (int) ChronoUnit.DAYS.between(rental.getPickupDate(), rental.getReturnDate());
-		rental.setTotalDays(diffDate);
-		double totalPrice = calculateTotalPrice(rental, car.getDailyPrice());
-		rental.setPickupCityId(car.getCity());
-		rental.setTotalPrice(totalPrice);
+		rental.setTotalDays(calculateTotalDays(rental));
+		rental.setTotalPrice(calculateTotalPrice(rental));
+		rental.getCar().setState(3);
+
 		rentalRepository.save(rental);
 		return new SuccessResult("RENTAL ADDED");
-		
 	
 	}
+	
+	@Override
+	public Result addCorporateCustomer(CreateRentalRequest createRentalRequest) {
+		checkIfCarState(createRentalRequest.getCarId());
+		checkDateToRentACar(createRentalRequest.getPickupDate(), createRentalRequest.getReturnDate());
+		checkCorporateCustomerExists(createRentalRequest.getCustomerId());
+		Rental rental = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
+		rental.setTotalDays(calculateTotalDays(rental));
+		rental.setTotalPrice(calculateTotalPrice(rental));
+		rental.getCar().setState(3);
+
+		rentalRepository.save(rental);
+		return new SuccessResult("RENTAL ADDED");
+	}
+	
+	
 
 	@Override
-	public Result update(UpdateRentalRequest updateRentalRequest) {
-		checkIfCarState(updateRentalRequest.getCarId());
+	public Result updateIndividualCustomer(UpdateRentalRequest updateRentalRequest) {
+		checkIfRentalExists(updateRentalRequest.getId());
 		checkDateToRentACar(updateRentalRequest.getPickupDate(), updateRentalRequest.getReturnDate());
-		Rental rentalToUpdate = this.modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
+		checkUserFindexScore(updateRentalRequest.getCarId(), updateRentalRequest.getCustomerId());
+		checkIndividualCustomerExists(updateRentalRequest.getCustomerId());
 		Car car = this.carRepository.findById(updateRentalRequest.getCarId());
-		int diffDate = (int) ChronoUnit.DAYS.between(rentalToUpdate.getPickupDate(), rentalToUpdate.getReturnDate());
-		rentalToUpdate.setTotalDays(diffDate);
-		double totalPrice = calculateTotalPrice(rentalToUpdate, car.getDailyPrice());
-		rentalToUpdate.setPickupCityId(car.getCity());
-		rentalToUpdate.setTotalPrice(totalPrice);
-		rentalRepository.save(rentalToUpdate);
+		checkRentalStateFromUpdate(car);
+		car.setState(3);
+		Rental rental = this.modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
+		rental.setTotalDays(calculateTotalDays(rental));
+		rental.setTotalPrice(calculateTotalPrice(rental));
+
+		rentalRepository.save(rental);
+		return new SuccessResult("RENTAL UPDATED");
+	}
+	
+	@Override
+	public Result updateCorporateCustomer(UpdateRentalRequest updateRentalRequest) {
+		checkIfRentalExists(updateRentalRequest.getId());
+		checkDateToRentACar(updateRentalRequest.getPickupDate(), updateRentalRequest.getReturnDate());
+		checkUserFindexScore(updateRentalRequest.getCarId(), updateRentalRequest.getCustomerId());
+		checkCorporateCustomerExists(updateRentalRequest.getCustomerId());
+		Car car = this.carRepository.findById(updateRentalRequest.getCarId());
+		checkRentalStateFromUpdate(car);
+		Rental rental = this.modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
+		rental.setTotalDays(calculateTotalDays(rental));
+		rental.setTotalPrice(calculateTotalPrice(rental));
+
+		rentalRepository.save(rental);
 		return new SuccessResult("RENTAL UPDATED");
 	}
 
 	@Override
 	public Result delete(DeleteRentalRequest deleteRentalRequest) {
-		Rental rental = new Rental();
-		rental.setId(deleteRentalRequest.getId());
+		checkIfRentalExists(deleteRentalRequest.getId());
+		Rental rental = this.rentalRepository.findById(deleteRentalRequest.getId());
 		this.rentalRepository.delete(rental);
 		return new SuccessDataResult<Rental>("RENTAL.DELETED"+rental.getId());
 	}
@@ -122,6 +158,27 @@ public class RentalManager implements RentalService {
 		return new SuccessDataResult<RentalResponse>(response,"RENTAL.GETTED") ;
 	
 	}
+	/////////////////////////////////////////////////////////////////
+	private void checkIfRentalExists(int rentalId) {
+		Rental rental = this.rentalRepository.findById(rentalId);	
+		if (rental == null) {
+			throw new BusinessException("THERE.IS.NOT.THIS.RENTAL");
+		}
+	}
+	
+	private void checkIndividualCustomerExists(int individualCustomerId) {
+		IndividualCustomer individualCustomer = this.individualCustomerRepository.findById(individualCustomerId);
+		if (individualCustomer == null) {
+			throw new BusinessException("THERE IS NOT INDIVIDUAL USER");
+		}
+	}
+	private void checkCorporateCustomerExists(int corporateCustomerId) {
+		CorporateCustomer corporateCustomer = this.corporateCustomerRepository.findById(corporateCustomerId);
+		if (corporateCustomer == null) {
+			throw new BusinessException("THERE IS NOT CORPORATE USER");
+		}
+	}
+	
 	
 	private double isDiffReturnCityFromPickUpCity(int pickUpCity, int returnCity) {
 		if (pickUpCity!=returnCity) {
@@ -130,18 +187,24 @@ public class RentalManager implements RentalService {
 		return 0;
 	}
 	
-	private double calculateTotalPrice(Rental rental, double dailyPrice) {
+	private double calculateTotalPrice(Rental rental) {
 		double days = rental.getTotalDays();
-		double totalDailyPrice = days* dailyPrice;
+		Car car = this.carRepository.findById(rental.getCar().getId());
+		double totalDailyPrice = days* car.getDailyPrice();
 		double diffCityPrice  = isDiffReturnCityFromPickUpCity(rental.getPickupCityId().getId(), rental.getReturnCityId().getId());
 		double totalPrice = totalDailyPrice + diffCityPrice;
 		return totalPrice;
 		
 	}
 	
+	
+	
 	private void checkIfCarState(int id) {
-		Car car = this.carRepository.findById(id);
-		if(car.getState()==2|| car.getState()==3) {
+		Car currentCar = this.carRepository.findById(id);
+		if(currentCar == null) {
+			throw new BusinessException("THIS CAR IS NOT EXIST");
+		}
+		if(currentCar.getState()==2|| currentCar.getState()==3) {
 			throw new BusinessException("CAR IS NOT AVAILABLE");
 		}
 		
@@ -165,14 +228,33 @@ public class RentalManager implements RentalService {
 	}
 	
 	
-	private void checkUserFindexScore(CreateRentalRequest createRentalRequest) {
-		Car car = this.carRepository.findById(createRentalRequest.getCarId());
-		IndividualCustomer user = this.individualCustomerRepository.findById(createRentalRequest.getIndividualCustomerId());
-		if (findexScoreCheckService.CheckIfCorrectPerso(user.getIdentityNumber()) > car.getMinFindexScore()) {
-			throw new BusinessException("USER.IS.NOT.ENO");
+	private void checkUserFindexScore(int carId, int individualCustomerId) {
+		Car car = this.carRepository.findById(carId);
+		IndividualCustomer user = this.individualCustomerRepository.findById(individualCustomerId);
+		if (findexScoreCheckService.CheckIfCorrectPerson(user.getIdentityNumber()) > car.getMinFindexScore()) {
+			throw new BusinessException("USER HAS NOT ENOUGH FINDEX SCORE  "+findexScoreCheckService.CheckIfCorrectPerson(user.getIdentityNumber()));
 		}
-		
 	}
+	
+	private int calculateTotalDays(Rental rental) {
+		int totalDays =(int) ChronoUnit.DAYS.between(rental.getPickupDate(), rental.getReturnDate());
+		return totalDays;
+	}
+	
+	private void checkRentalStateFromUpdate(Car newCar) {
+		Car oldCar = this.carRepository.findById(newCar.getId());
+		if (newCar.getState() != oldCar.getState()) {
+			checkIfCarState(newCar.getId());
+			oldCar.setState(1);		
+		}
+	}
+
+	
+
+
+	
+	
+	
 
 }
 

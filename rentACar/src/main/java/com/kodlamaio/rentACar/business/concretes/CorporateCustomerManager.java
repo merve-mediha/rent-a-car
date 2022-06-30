@@ -44,8 +44,10 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
 	@Override
 	public Result update(UpdateCorporateCustomerRequest updateCorporateCustomerRequest) {
-		checkCorporateExists(updateCorporateCustomerRequest.getCorporateCutomerId());
-		CorporateCustomer corporateCustomer = this.modelMapperService.forRequest().map(updateCorporateCustomerRequest, CorporateCustomer.class);
+		checkCorporateExists(updateCorporateCustomerRequest.getCorporateCustomerId());
+		CorporateCustomer corporateCustomer = this.corporateCustomerRepository.findById(updateCorporateCustomerRequest.getCorporateCustomerId());
+		checkCorporateCustomerExistsTaxNumber(updateCorporateCustomerRequest.getTaxNumber());	
+		corporateCustomer = this.modelMapperService.forRequest().map(updateCorporateCustomerRequest, CorporateCustomer.class);
 		this.corporateCustomerRepository.save(corporateCustomer);
 		return new SuccessResult("CORPORATE CUSTOMER UPDATED");
 	}

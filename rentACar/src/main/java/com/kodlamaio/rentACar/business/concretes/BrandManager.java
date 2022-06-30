@@ -21,7 +21,8 @@ import com.kodlamaio.rentACar.core.utilities.results.SuccessResult;
 import com.kodlamaio.rentACar.dataAccess.abstracts.BrandRepository;
 import com.kodlamaio.rentACar.entities.concretes.Brand;
 
-//BrandServiceImpl Impl görünce Manager aklına gelsin
+
+
 @Service
 public class BrandManager implements BrandService {
 

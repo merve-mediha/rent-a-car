@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCorporateCustomerRequest {
-	private int corporateCutomerId;
+	private int corporateCustomerId;
 	private String corporateCustomerName;
 	private String taxNumber;
 	private String email;

@@ -13,6 +13,6 @@ public class CreateMaintenanceRequest {
 	private int id;
 	private String description;
 	private LocalDate sentDate;
-	private LocalDate ReturnedDate;
+	private LocalDate returnedDate;
 	private int carId;
 }

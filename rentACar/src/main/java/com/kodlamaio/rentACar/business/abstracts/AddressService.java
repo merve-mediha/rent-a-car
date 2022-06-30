@@ -5,8 +5,8 @@ import java.util.List;
 import com.kodlamaio.rentACar.business.request.addresses.CreateAddressRequest;
 import com.kodlamaio.rentACar.business.request.addresses.DeleteAddressRequest;
 import com.kodlamaio.rentACar.business.request.addresses.UpdateAddressRequest;
-import com.kodlamaio.rentACar.business.responses.adresses.AddressResponse;
-import com.kodlamaio.rentACar.business.responses.adresses.ListAddressResponse;
+import com.kodlamaio.rentACar.business.responses.addresses.AddressResponse;
+import com.kodlamaio.rentACar.business.responses.addresses.ListAddressResponse;
 import com.kodlamaio.rentACar.core.utilities.results.DataResult;
 import com.kodlamaio.rentACar.core.utilities.results.Result;
 

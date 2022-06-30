@@ -10,4 +10,5 @@ import com.kodlamaio.rentACar.entities.concretes.Invoice;
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer>{
 	Invoice findById(int id);
 	List<AdditionalServiceItem> findByRentalId(int id );
+	Invoice findByInvoiceNumber(int id);
 }

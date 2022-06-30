@@ -26,13 +26,19 @@ public class RentalsController {
 		this.rentalService = rentalService;
 	}
 	
-	@PostMapping("/add")
-	public Result add(@RequestBody CreateRentalRequest createRentalRequest) {
-		return this.rentalService.add(createRentalRequest);
+	@PostMapping("/addIndividualCustomer")
+	public Result addIndividualCustomer(@RequestBody CreateRentalRequest createRentalRequest) {
+		return this.rentalService.addIndividualCustomer(createRentalRequest);
 	}
-	@PostMapping("/update")
-	public Result update(@RequestBody UpdateRentalRequest updateRentalRequest) {
-		return this.rentalService.update(updateRentalRequest);
+	
+	@PostMapping("/addCorporateCustomer")
+	public Result addCorporateCustomer(@RequestBody CreateRentalRequest createRentalRequest) {
+		return this.rentalService.addCorporateCustomer(createRentalRequest);
+	}
+	
+	@PostMapping("/updateIndividualCustomer")
+	public Result updateIndividualCustomer(@RequestBody UpdateRentalRequest updateRentalRequest) {
+		return this.rentalService.updateIndividualCustomer(updateRentalRequest);
 	}
 
 	@PostMapping("/delete")

@@ -1,4 +1,4 @@
-package com.kodlamaio.rentACar.business.responses.adresses;
+package com.kodlamaio.rentACar.business.responses.addresses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

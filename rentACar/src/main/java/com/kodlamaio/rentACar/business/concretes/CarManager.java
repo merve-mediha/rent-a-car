@@ -102,13 +102,17 @@ public class CarManager implements CarService {
 	@Override
 	public Result update(UpdateCarRequest updateCarRequest) {
 		checkIfCarExists(updateCarRequest.getId());
-		Car carToUpdate = modelMapperService.forRequest().map(updateCarRequest,Car.class);
-		
-		this.carRepository.save(carToUpdate);
+		checkColorExists(updateCarRequest.getColorId());
+		Car car = this.carRepository.findById(updateCarRequest.getId());
+		car = modelMapperService.forRequest().map(updateCarRequest,Car.class);
+		checkBrandNameFromUpdate(car);
+		checkCarNumberPlateFromUpdate(car);
+		this.carRepository.save(car);
 		return new SuccessResult("CAR UPDATED");
 		
 		
 	}
+	///////////////////////////////////////////////////////////////////////
 	private void checkBrandCount(int brandId) {
 		List<Car> cars = carRepository.findByBrandId(brandId);
 		if(cars.size()>= 5) {
@@ -142,6 +146,22 @@ public class CarManager implements CarService {
 			throw new BusinessException("THIS CAR COULDN'T EXISTS");
 		}
 	}
+	
+	private void checkBrandNameFromUpdate(Car newCar) {
+		Car oldCar = this.carRepository.findById(newCar.getId());
+		if (oldCar.getBrand().getId() != newCar.getBrand().getId()) {
+			checkBrandCount(newCar.getBrand().getId());
+		}
+	}
+	
+	private void checkCarNumberPlateFromUpdate(Car newCar) {
+		Car oldCar = this.carRepository.findById(newCar.getId());
+		if (oldCar.getCarPlate() != (newCar.getCarPlate())) {
+			checkCarPlate(newCar.getCarPlate());
+		}
+	}
+	
+	
 	
 	
 			
