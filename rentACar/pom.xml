@@ -16,6 +16,8 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+	
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -39,6 +41,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-aop</artifactId>
     </dependency>
+    
+    <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version> 2.10.3</version>
+		</dependency>
    
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -72,6 +80,8 @@
     <artifactId>log4j-jcl</artifactId>
     <version>2.17.2</version>
 </dependency>
+
+
 	</dependencies>
 
 	<build>
