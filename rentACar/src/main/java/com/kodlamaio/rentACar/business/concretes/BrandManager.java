@@ -21,6 +21,8 @@ import com.kodlamaio.rentACar.core.utilities.results.SuccessResult;
 import com.kodlamaio.rentACar.dataAccess.abstracts.BrandRepository;
 import com.kodlamaio.rentACar.entities.concretes.Brand;
 
+import lombok.Builder;
+
 
 
 @Service
@@ -40,7 +42,10 @@ public class BrandManager implements BrandService {
 	@Override
 	public Result add(CreateBrandRequest createBrandRequest) {
 		checkIfExistByName(createBrandRequest.getName());
-		Brand brand =  this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
+//		Brand brand =  this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
+		Brand brand = Brand.builder()
+				.name(createBrandRequest.getName()).build();
+		
 		this.brandRepository.save(brand);
 		return new SuccessResult("BRAND ADDED");
 	}
